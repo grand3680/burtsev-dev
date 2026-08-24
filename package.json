@@ -1,0 +1,45 @@
+{
+  "name": "burtsev-dev",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Персональный сайт-визитка Кирилла Бурцева — монорепо frontend + backend",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "concurrently -n backend,frontend -c blue,magenta \"npm:dev:backend\" \"npm:dev:frontend\"",
+    "dev:frontend": "npm run dev --workspace frontend",
+    "dev:backend": "npm run start:dev --workspace backend",
+    "build": "npm run build --workspace backend && npm run build --workspace frontend",
+    "lint": "npm run lint --workspace frontend && npm run lint --workspace backend",
+    "lint:fix": "npm run lint:fix --workspace frontend && npm run lint:fix --workspace backend",
+    "typecheck": "npm run typecheck --workspace frontend && npm run typecheck --workspace backend",
+    "test": "npm run test --workspace frontend && npm run test --workspace backend",
+    "test:e2e": "npm run test:e2e --workspace backend",
+    "codegen": "npm run codegen --workspace frontend",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.1",
+    "prettier": "^3.4.2"
+  },
+  "lint-staged": {
+    "frontend/**/*.{ts,tsx,js}": [
+      "prettier --write --log-level silent"
+    ],
+    "backend/**/*.ts": [
+      "prettier --write --log-level silent"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write --log-level silent"
+    ]
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

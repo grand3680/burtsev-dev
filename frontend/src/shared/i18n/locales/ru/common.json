@@ -1,0 +1,25 @@
+{
+  "nav": {
+    "home": "Главная",
+    "capabilities": "Что я могу",
+    "dataFetching": "Данные",
+    "timeline": "Опыт",
+    "contacts": "Контакты"
+  },
+  "theme": {
+    "toggle": "Переключить тему",
+    "light": "Светлая",
+    "dark": "Тёмная"
+  },
+  "language": {
+    "switch": "Сменить язык"
+  },
+  "actions": {
+    "scrollDown": "Листайте вниз"
+  },
+  "fetchFlow": {
+    "client": "Клиент",
+    "server": "GraphQL",
+    "db": "База данных"
+  }
+}

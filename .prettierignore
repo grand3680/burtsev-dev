@@ -1,0 +1,8 @@
+node_modules
+dist
+build
+coverage
+frontend/src/shared/api/generated.ts
+backend/schema.gql
+backend/prisma/migrations
+**/*.md

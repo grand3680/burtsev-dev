@@ -1,0 +1,27 @@
+query Experiences($lang: Language!) {
+  experiences(lang: $lang) {
+    id
+    kind
+    company
+    role
+    location
+    period
+    bullets
+    stack
+    order
+  }
+}
+
+query Projects($lang: Language!) {
+  projects(lang: $lang) {
+    id
+    kind
+    company
+    role
+    location
+    period
+    bullets
+    stack
+    order
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "greeting": "Hello! The GraphQL API is up and running.",
+  "contact": {
+    "received": "Thanks — your message has been received."
+  }
+}

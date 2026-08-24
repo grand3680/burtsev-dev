@@ -1,0 +1,333 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/experiences": {
+      "get": {
+        "operationId": "ExperienceController_experiences",
+        "parameters": [
+          {
+            "name": "lang",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": ["ru", "en"],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExperienceDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Опыт работы для таймлайна",
+        "tags": ["experience"]
+      }
+    },
+    "/api/projects": {
+      "get": {
+        "operationId": "ExperienceController_projects",
+        "parameters": [
+          {
+            "name": "lang",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": ["ru", "en"],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExperienceDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Проекты",
+        "tags": ["experience"]
+      }
+    },
+    "/api/skills": {
+      "get": {
+        "operationId": "SkillController_skills",
+        "parameters": [
+          {
+            "name": "lang",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": ["ru", "en"],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SkillDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Категории навыков",
+        "tags": ["skill"]
+      }
+    },
+    "/api/contact": {
+      "post": {
+        "operationId": "ContactController_submit",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmitContactBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Отправить сообщение из формы обратной связи",
+        "tags": ["contact"]
+      }
+    },
+    "/api/health": {
+      "get": {
+        "operationId": "HealthController_health",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Health-check",
+        "tags": ["health"]
+      }
+    }
+  },
+  "info": {
+    "title": "Burtsev Dev API",
+    "description": "REST-зеркало GraphQL-контрактов сайта-визитки Кирилла Бурцева",
+    "version": "0.1.0",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "experience",
+      "description": ""
+    },
+    {
+      "name": "skill",
+      "description": ""
+    },
+    {
+      "name": "contact",
+      "description": ""
+    },
+    {
+      "name": "health",
+      "description": ""
+    }
+  ],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "ExperienceKind": {
+        "type": "string",
+        "enum": ["Job", "Project"]
+      },
+      "ExperienceDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "clx123"
+          },
+          "kind": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ExperienceKind"
+              }
+            ]
+          },
+          "company": {
+            "type": "string",
+            "example": "Overchat"
+          },
+          "role": {
+            "type": "string",
+            "description": "Должность/роль на выбранном языке"
+          },
+          "location": {
+            "type": "string",
+            "example": "Удалённо"
+          },
+          "period": {
+            "type": "string",
+            "description": "Период на выбранном языке"
+          },
+          "bullets": {
+            "description": "Достижения/буллеты",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "stack": {
+            "description": "Технологический стек (для проектов)",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "order": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "company",
+          "role",
+          "location",
+          "period",
+          "bullets",
+          "stack",
+          "order"
+        ]
+      },
+      "SkillDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "clx456"
+          },
+          "category": {
+            "type": "string",
+            "description": "Название категории на выбранном языке",
+            "example": "Фронтенд"
+          },
+          "items": {
+            "example": ["React", "Next.js", "TailwindCSS"],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "order": {
+            "type": "number",
+            "example": 2
+          }
+        },
+        "required": ["id", "category", "items", "order"]
+      },
+      "SubmitContactBody": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 80,
+            "example": "Кирилл"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "kirill.burtsev07@gmail.com"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 2000,
+            "example": "Здравствуйте! Хочу обсудить сотрудничество."
+          }
+        },
+        "required": ["name", "email", "message"]
+      },
+      "ContactDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": ["id", "name", "email", "message", "createdAt"]
+      },
+      "HealthDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "ok"
+          },
+          "time": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": ["status", "time"]
+      }
+    }
+  }
+}

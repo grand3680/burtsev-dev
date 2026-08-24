@@ -1,0 +1,28 @@
+{
+  "eyebrow": "How I work with data",
+  "title": "Real-time data-fetching",
+  "description": "On the left — a real GraphQL query. Press “Run”: the execution plays step by step on the right, and only then the data arrives from our backend.",
+  "run": "Run",
+  "running": "Running…",
+  "rerun": "Run again",
+  "codeTitle": "Query",
+  "steps": {
+    "validation": "Input validation",
+    "interceptor": "Request interceptor",
+    "parsing": "Parsing & normalization"
+  },
+  "result": {
+    "title": "Data received",
+    "experiences": "Experience records",
+    "skills": "Skill categories",
+    "serverTime": "Server time",
+    "hint": "Response from NestJS + Prisma over GraphQL"
+  },
+  "error": "Failed to fetch data. Is the backend running?",
+  "swagger": {
+    "title": "REST contract (OpenAPI)",
+    "description": "The same content is available as documented REST — auto-generated Swagger.",
+    "open": "Open Swagger UI",
+    "unavailable": "Swagger unavailable (backend not running)."
+  }
+}

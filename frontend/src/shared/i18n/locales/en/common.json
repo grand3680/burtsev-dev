@@ -1,0 +1,25 @@
+{
+  "nav": {
+    "home": "Home",
+    "capabilities": "What I do",
+    "dataFetching": "Data",
+    "timeline": "Experience",
+    "contacts": "Contacts"
+  },
+  "theme": {
+    "toggle": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "language": {
+    "switch": "Switch language"
+  },
+  "actions": {
+    "scrollDown": "Scroll down"
+  },
+  "fetchFlow": {
+    "client": "Client",
+    "server": "GraphQL",
+    "db": "Database"
+  }
+}

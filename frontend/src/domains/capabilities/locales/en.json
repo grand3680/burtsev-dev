@@ -1,0 +1,28 @@
+{
+  "eyebrow": "What I do",
+  "title": "External API integrations",
+  "description": "Stripe, S3, AWS, OpenAI and webhooks converge into a single API core. I design reliable integration layers: payments, storage, auth and AI providers.",
+  "cards": {
+    "payments": {
+      "title": "Payments",
+      "text": "Stripe: subscriptions, infrastructure migration across entities, webhooks."
+    },
+    "cloud": {
+      "title": "Cloud & storage",
+      "text": "AWS Lambda and S3, serverless modules, background queues with batching."
+    },
+    "auth": {
+      "title": "Authentication",
+      "text": "SSO and 2FA on AWS Cognito, JWT/OAuth, secure sessions."
+    },
+    "ai": {
+      "title": "AI integrations",
+      "text": "Persistent AI memory, synchronization across OpenAI and OpenRouter."
+    }
+  },
+  "skills": {
+    "title": "Skills",
+    "loading": "Fetching skills from GraphQL…",
+    "error": "Failed to load skills. Is the backend running?"
+  }
+}

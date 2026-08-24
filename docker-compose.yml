@@ -1,0 +1,48 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-burtsev}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-burtsev}
+      POSTGRES_DB: ${POSTGRES_DB:-burtsev}
+    ports:
+      - '${POSTGRES_PORT:-5432}:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-burtsev} -d ${POSTGRES_DB:-burtsev}']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-burtsev}:${POSTGRES_PASSWORD:-burtsev}@postgres:5432/${POSTGRES_DB:-burtsev}?schema=public
+      BACKEND_PORT: 4000
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:5173}
+    ports:
+      - '${BACKEND_PORT:-4000}:4000'
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        # Baked into the static bundle at build time (Vite inlines VITE_* vars).
+        VITE_GRAPHQL_URL: ${VITE_GRAPHQL_URL:-http://localhost:4000/graphql}
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - '${FRONTEND_PORT:-5173}:80'
+
+volumes:
+  pgdata:

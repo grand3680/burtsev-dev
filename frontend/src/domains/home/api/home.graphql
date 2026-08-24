@@ -1,0 +1,3 @@
+query Health($lang: Language!) {
+  health(lang: $lang)
+}

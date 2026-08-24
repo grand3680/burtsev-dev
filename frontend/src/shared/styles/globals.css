@@ -1,0 +1,129 @@
+@import 'tailwindcss';
+
+/* Тёмная тема активируется классом .dark на <html>. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Дизайн-токены (CSS-переменные), маппятся в Tailwind-цвета через @theme inline. */
+:root {
+  --background: #f7f8fb;
+  --foreground: #0b1220;
+  --muted: #e6e9f0;
+  --muted-foreground: #55607a;
+  --card: #ffffff;
+  --card-foreground: #0b1220;
+  --border: #d9deea;
+  --primary: #0ea5e9;
+  --primary-foreground: #ffffff;
+  --accent: #a855f7;
+  --accent-foreground: #ffffff;
+  --ring: #0ea5e9;
+  --radius: 0.75rem;
+}
+
+.dark {
+  --background: #05070d;
+  --foreground: #e8ecf6;
+  --muted: #121826;
+  --muted-foreground: #93a0bd;
+  --card: #0b1120;
+  --card-foreground: #e8ecf6;
+  --border: #1e2841;
+  --primary: #38bdf8;
+  --primary-foreground: #04121d;
+  --accent: #c084fc;
+  --accent-foreground: #1a0b2e;
+  --ring: #38bdf8;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-ring: var(--ring);
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 0.25rem);
+  --radius-sm: calc(var(--radius) - 0.4rem);
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', 'Fira Code', Menlo, Consolas, monospace;
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Утилита для «электрического» свечения линий. */
+@utility text-glow {
+  text-shadow: 0 0 12px color-mix(in oklab, var(--color-primary) 60%, transparent);
+}
+
+/* Бегущий «ток» вдоль SVG-линий. */
+@keyframes wire-flow {
+  to {
+    stroke-dashoffset: -200;
+  }
+}
+
+/* Пульсация свечения узлов/линий. */
+@keyframes wire-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.82;
+  }
+}
+
+@keyframes node-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-primary) 28%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 14px 2px color-mix(in oklab, var(--color-primary) 28%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wire-animated,
+  .node-pulse {
+    animation: none !important;
+  }
+}

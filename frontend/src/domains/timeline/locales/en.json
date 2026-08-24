@@ -1,0 +1,9 @@
+{
+  "eyebrow": "Work experience",
+  "title": "Career track",
+  "description": "From CRM platforms to high-load services and AI integrations.",
+  "projectsTitle": "Projects",
+  "loading": "Fetching work experience from GraphQL…",
+  "error": "Failed to load experience. Is the backend running?",
+  "stack": "Stack"
+}

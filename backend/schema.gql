@@ -1,0 +1,115 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""Сообщение из формы обратной связи"""
+type ContactModel {
+  createdAt: DateTime!
+  email: String!
+  id: ID!
+  message: String!
+  name: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+"""Результат демо-запроса: ступени + реальные данные с бэкенда"""
+type DemoResultModel {
+  """Реальные данные, полученные с бэкенда"""
+  experiences: [ExperienceModel!]!
+
+  """Количество записей опыта в базе"""
+  experiencesCount: Int!
+
+  """Время ответа сервера (ISO)"""
+  serverTime: String!
+
+  """Количество категорий навыков в базе"""
+  skillsCount: Int!
+  steps: [DemoStepModel!]!
+  totalDurationMs: Int!
+}
+
+"""Одна ступень выполнения запроса (для анимации на фронте)"""
+type DemoStepModel {
+  """Рекомендованная длительность анимации ступени, мс"""
+  durationMs: Int!
+
+  """Машинный ключ ступени: validation | interceptor | parsing"""
+  key: String!
+
+  """Человекочитаемая метка на выбранном языке"""
+  label: String!
+}
+
+"""Тип записи: место работы (Job) или проект (Project)"""
+enum ExperienceKind {
+  Job
+  Project
+}
+
+"""Локализованная запись опыта работы или проекта"""
+type ExperienceModel {
+  """Достижения/буллеты на выбранном языке"""
+  bullets: [String!]!
+  company: String!
+  id: ID!
+  kind: ExperienceKind!
+  location: String!
+  order: Int!
+
+  """Период на выбранном языке"""
+  period: String!
+
+  """Должность / роль на выбранном языке"""
+  role: String!
+
+  """Технологический стек (для проектов)"""
+  stack: [String!]!
+}
+
+"""Язык, на котором вернуть локализованный контент"""
+enum Language {
+  EN
+  RU
+}
+
+type Mutation {
+  """Отправить сообщение из формы обратной связи"""
+  submitContact(input: SubmitContactInput!): ContactModel!
+}
+
+type Query {
+  """Опыт работы для таймлайна"""
+  experiences(lang: Language! = RU): [ExperienceModel!]!
+
+  """Health-check с локализованным приветствием"""
+  health(lang: Language! = RU): String!
+
+  """Проекты"""
+  projects(lang: Language! = RU): [ExperienceModel!]!
+
+  """Демо-запрос секции data-fetching: ступени выполнения + реальные данные"""
+  runDemo(lang: Language! = RU): DemoResultModel!
+
+  """Категории навыков"""
+  skills(lang: Language! = RU): [SkillModel!]!
+}
+
+"""Категория навыков со списком элементов"""
+type SkillModel {
+  """Название категории на выбранном языке"""
+  category: String!
+  id: ID!
+  items: [String!]!
+  order: Int!
+}
+
+input SubmitContactInput {
+  email: String!
+  message: String!
+  name: String!
+}

@@ -1,0 +1,70 @@
+// Prisma schema — контент сайта-визитки.
+// Локализация: пары полей *_ru / *_en, отдаваемые резолверами в зависимости от языка.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// Опыт работы / проект (тип различается полем `kind`).
+model Experience {
+  id         String         @id @default(cuid())
+  kind       ExperienceKind @default(Job)
+  companyRu  String
+  companyEn  String
+  roleRu     String
+  roleEn     String
+  locationRu String
+  locationEn String
+  periodRu   String
+  periodEn   String
+  /// Даты для сортировки таймлайна.
+  startDate DateTime
+  endDate   DateTime?
+  /// Буллеты-достижения.
+  bulletsRu String[]
+  bulletsEn String[]
+  /// Стек проекта (для kind = Project).
+  stack     String[]
+  order     Int            @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([kind, order])
+}
+
+enum ExperienceKind {
+  Job
+  Project
+}
+
+/// Категория навыков со списком элементов.
+model Skill {
+  id         String   @id @default(cuid())
+  categoryRu String
+  categoryEn String
+  itemsRu    String[]
+  itemsEn    String[]
+  order      Int      @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([order])
+}
+
+/// Сообщение из формы обратной связи.
+model Contact {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}

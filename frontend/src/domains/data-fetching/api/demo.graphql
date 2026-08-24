@@ -1,0 +1,19 @@
+query RunDemo($lang: Language!) {
+  runDemo(lang: $lang) {
+    steps {
+      key
+      label
+      durationMs
+    }
+    totalDurationMs
+    experiencesCount
+    skillsCount
+    serverTime
+    experiences {
+      id
+      company
+      role
+      period
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "eyebrow": "Contacts",
+  "title": "Let’s work together",
+  "description": "Open to interesting projects and collaboration. Drop a line — I reply fast.",
+  "form": {
+    "name": "Name",
+    "namePlaceholder": "How should I call you",
+    "email": "Email",
+    "emailPlaceholder": "you@example.com",
+    "message": "Message",
+    "messagePlaceholder": "Tell me about your task…",
+    "submit": "Send",
+    "sending": "Sending…",
+    "success": "Thanks! Your message has been sent.",
+    "error": "Something went wrong. Try again later.",
+    "invalidEmail": "Enter a valid email",
+    "required": "This field is required"
+  },
+  "links": {
+    "title": "Or directly"
+  }
+}
