@@ -11,7 +11,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          three: ['three', '@react-three/fiber', '@react-three/drei'],
+          three: ['three', '@react-three/fiber'],
           motion: ['framer-motion', 'gsap'],
           apollo: ['@apollo/client', 'graphql']
         }

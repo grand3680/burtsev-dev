@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ExternalLink, FileJson } from 'lucide-react'
+import type { paths } from '@shared/api/rest-schema'
 import { backendBaseUrl } from '@shared/lib/env'
 import { cn } from '@shared/lib/cn'
 
+/** Пути и методы берём из авто-сгенерированного OpenAPI-контракта (@shared/api/rest-schema). */
+type ApiPath = keyof paths
+type HttpMethod = 'get' | 'post' | 'put' | 'delete' | 'patch'
+
 interface Endpoint {
-  method: string
-  path: string
+  method: HttpMethod
+  path: ApiPath
   summary: string
 }
 
@@ -88,18 +93,24 @@ export function SwaggerPreview() {
   )
 }
 
-interface OpenApiOperation {
-  summary?: string
+/**
+ * Форма ответа /docs-json (сырой OpenAPI-документ). Пути/методы ограничены
+ * контрактом из rest-schema; `summary` — поле документации, которого нет в
+ * типизированном контракте, поэтому читаем его как необязательное.
+ */
+type OpenApiDoc = {
+  paths?: Partial<Record<ApiPath, Partial<Record<HttpMethod, { summary?: string }>>>>
 }
-interface OpenApiDoc {
-  paths?: Record<string, Record<string, OpenApiOperation>>
-}
+
+const HTTP_METHODS: HttpMethod[] = ['get', 'post', 'put', 'delete', 'patch']
 
 function extractEndpoints(doc: OpenApiDoc): Endpoint[] {
   const result: Endpoint[] = []
-  const methods = ['get', 'post', 'put', 'delete', 'patch']
-  for (const [path, operations] of Object.entries(doc.paths ?? {})) {
-    for (const method of methods) {
+  for (const [path, operations] of Object.entries(doc.paths ?? {}) as [
+    ApiPath,
+    Partial<Record<HttpMethod, { summary?: string }>>
+  ][]) {
+    for (const method of HTTP_METHODS) {
       const operation = operations[method]
       if (operation) {
         result.push({ method, path, summary: operation.summary ?? '' })

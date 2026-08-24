@@ -9,7 +9,7 @@ GraphQL-бэкенд — секция data-fetching дёргает его в р�
 | Слой        | Технологии                                                                       |
 | ----------- | -------------------------------------------------------------------------------- |
 | Frontend    | TypeScript, Vite, React 19, Tailwind CSS + shadcn/ui, Apollo Client              |
-| Анимации/3D | Three.js (`@react-three/fiber` + `drei`), Framer Motion, GSAP (ScrollTrigger)    |
+| Анимации/3D | Three.js (`@react-three/fiber`), Framer Motion, GSAP (ScrollTrigger)             |
 | i18n        | i18next / react-i18next (ru · en)                                                |
 | Backend     | Node.js, NestJS, GraphQL (code-first), Prisma, PostgreSQL                         |
 | i18n (API)  | nestjs-i18n (ru · en)                                                             |
