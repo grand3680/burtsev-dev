@@ -1,5 +1,5 @@
 import { CallHandler, ExecutionContext, Injectable, Logger, NestInterceptor } from '@nestjs/common'
-import { GqlExecutionContext } from '@nestjs/graphql'
+import { GqlContextType, GqlExecutionContext } from '@nestjs/graphql'
 import { Observable } from 'rxjs'
 import { tap } from 'rxjs/operators'
 
@@ -12,6 +12,12 @@ export class LoggingInterceptor implements NestInterceptor {
   private readonly logger = new Logger('GraphQL')
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
+    // Интерсептор — только для GraphQL. REST-контроллеры (Swagger, /api/*) пропускаем,
+    // иначе GqlExecutionContext.getInfo() вернёт null и уронит запрос в 500.
+    if (context.getType<GqlContextType>() !== 'graphql') {
+      return next.handle()
+    }
+
     const gqlContext = GqlExecutionContext.create(context)
     const info = gqlContext.getInfo<{ parentType: { name: string }; fieldName: string }>()
     const label = `${info.parentType.name}.${info.fieldName}`
