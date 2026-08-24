@@ -22,7 +22,8 @@ import { RestModule } from './rest/rest.module'
       fallbackLanguage: 'ru',
       loaderOptions: {
         path: join(__dirname, 'i18n', 'locales'),
-        watch: true
+        // На Vercel файловая система read-only — fs.watch недоступен.
+        watch: !process.env.VERCEL
       },
       resolvers: [
         { use: QueryResolver, options: ['lang'] },
@@ -32,7 +33,8 @@ import { RestModule } from './rest/rest.module'
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'schema.gql'),
+      // process.cwd() на Vercel read-only — генерируемую схему пишем в /tmp.
+      autoSchemaFile: process.env.VERCEL ? '/tmp/schema.gql' : join(process.cwd(), 'schema.gql'),
       sortSchema: true,
       playground: false,
       graphiql: true,

@@ -2,7 +2,9 @@
 // Локализация: пары полей *_ru / *_en, отдаваемые резолверами в зависимости от языка.
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  // native — для локали/Docker; rhel-openssl-3.0.x — рантайм Vercel (AWS Lambda).
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 datasource db {
