@@ -1,7 +1,9 @@
 import type { IncomingMessage, ServerResponse } from 'node:http'
 import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
+import { SwaggerModule } from '@nestjs/swagger'
 import { AppModule } from './app.module'
+import { buildOpenApiDocument } from './swagger'
 
 // Точка входа для Vercel Serverless Functions.
 // В отличие от main.ts не вызывает app.listen — Vercel сам передаёт req/res.
@@ -27,6 +29,14 @@ async function bootstrap(): Promise<ExpressInstance> {
       transform: true
     })
   )
+
+  // Swagger UI на /docs, JSON на /docs-json. В отличие от main.ts не пишем
+  // openapi.json на диск — файловая система Vercel read-only.
+  const document = buildOpenApiDocument(app)
+  SwaggerModule.setup('docs', app, document, {
+    jsonDocumentUrl: 'docs-json',
+    customSiteTitle: 'Burtsev Dev API'
+  })
 
   await app.init()
 
