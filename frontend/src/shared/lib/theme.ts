@@ -2,9 +2,15 @@ import { createContext, useContext } from 'react'
 
 export type Theme = 'light' | 'dark'
 
+/** Точка, из которой расходится круговое раскрытие при смене темы. */
+export interface ThemeTransitionOrigin {
+  x: number
+  y: number
+}
+
 export interface ThemeContextValue {
   theme: Theme
-  toggleTheme: () => void
+  toggleTheme: (origin?: ThemeTransitionOrigin) => void
   setTheme: (theme: Theme) => void
 }
 

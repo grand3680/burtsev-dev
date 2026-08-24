@@ -23,7 +23,7 @@ export function Hero() {
   return (
     <div
       ref={ref}
-      className="grid min-h-[calc(100vh-4rem)] items-center gap-10 py-10 md:grid-cols-2 md:gap-6"
+      className="grid min-h-0 flex-1 items-center gap-10 py-6 md:grid-cols-2 md:gap-6"
     >
       <motion.div style={{ y: textY, opacity }} className="order-2 md:order-1">
         <Badge className="mb-5">{t('badge')}</Badge>

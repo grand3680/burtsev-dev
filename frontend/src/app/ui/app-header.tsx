@@ -16,9 +16,13 @@ export function AppHeader() {
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-md">
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <a href="#home" className="flex items-center gap-2 font-bold" aria-label="Кирилл Бурцев">
-          <span className="grid h-8 w-8 place-items-center rounded-md bg-primary text-sm text-primary-foreground">
-            KB
-          </span>
+          <img
+            src="/kirill-burtsev.ico"
+            alt="Кирилл Бурцев"
+            width={32}
+            height={32}
+            className="h-8 w-8 rounded-md object-cover ring-1 ring-border"
+          />
           <span className="hidden sm:inline">Кирилл Бурцев</span>
         </a>
 
