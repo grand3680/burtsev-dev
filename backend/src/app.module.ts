@@ -4,13 +4,9 @@ import { APP_INTERCEPTOR } from '@nestjs/core'
 import { ConfigModule } from '@nestjs/config'
 import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
-import {
-  AcceptLanguageResolver,
-  I18nModule,
-  QueryResolver,
-  HeaderResolver
-} from 'nestjs-i18n'
+import { AcceptLanguageResolver, I18nModule, QueryResolver, HeaderResolver } from 'nestjs-i18n'
 import { PrismaModule } from './prisma/prisma.module'
+import { SeedModule } from './seed/seed.module'
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor'
 import { AppResolver } from './app.resolver'
 import { ExperienceModule } from './modules/experience/experience.module'
@@ -43,6 +39,7 @@ import { RestModule } from './rest/rest.module'
       introspection: true
     }),
     PrismaModule,
+    SeedModule,
     ExperienceModule,
     SkillModule,
     ContactModule,

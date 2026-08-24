@@ -35,7 +35,7 @@ async function bootstrap(): Promise<void> {
     // необязательный побочный эффект — не мешаем старту
   }
 
-  const port = Number(process.env.BACKEND_PORT ?? 4000)
+  const port = Number(process.env.PORT ?? process.env.BACKEND_PORT ?? 4000)
   await app.listen(port, '0.0.0.0')
   Logger.log(`🚀 GraphQL API ready at http://localhost:${String(port)}/graphql`, 'Bootstrap')
   Logger.log(`📘 Swagger UI at http://localhost:${String(port)}/docs`, 'Bootstrap')
