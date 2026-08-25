@@ -9,6 +9,27 @@
       content="Кирилл Бурцев — Full-stack разработчик. React, Next.js, TypeScript, NestJS."
     />
     <title>Кирилл Бурцев — Full-stack разработчик</title>
+    <script>
+      // Применяем тему синхронно, до первой отрисовки, чтобы не мигало.
+      // Источник в порядке приоритета: cookie -> localStorage -> системная тема.
+      // Ключи синхронизированы с shared/lib/theme.ts (THEME_STORAGE_KEY).
+      ;(function () {
+        try {
+          var m = document.cookie.match(/(?:^|;\s*)burtsev\.theme=(light|dark)(?:;|$)/)
+          var theme = m && m[1]
+          if (!theme) {
+            var stored = localStorage.getItem('burtsev.theme')
+            if (stored === 'light' || stored === 'dark') theme = stored
+          }
+          if (!theme) {
+            theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+          }
+          var root = document.documentElement
+          root.classList.toggle('dark', theme === 'dark')
+          root.style.colorScheme = theme
+        } catch (e) {}
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>
