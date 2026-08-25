@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useInView } from 'framer-motion'
+import { cn } from '@shared/lib/cn'
 import { Section, SectionHeading } from '@shared/ui/section'
 import { Reveal } from '@shared/ui/reveal'
 import { Card, CardContent } from '@shared/ui/card'
@@ -15,14 +16,16 @@ const MIN_FLOW_MS = 1500
 export function TimelinePage() {
   const { t } = useTranslation('timeline')
 
-  // Запрос откладываем до появления секции во вьюпорте — тогда анимация фетча видна.
+  // Данные грузим сразу на маунте: контент занимает свою высоту заранее, поэтому
+  // переход к #contacts не «промахивается» из-за подгрузки таймлайна/проектов.
+  const { data: expData, loading, error } = useExperiences()
+  const { data: projData } = useProjects()
+
+  // Анимацию фетча показываем, когда секция появляется во вьюпорте — чисто визуально.
   const anchorRef = useRef<HTMLDivElement>(null)
   const inView = useInView(anchorRef, { once: true, margin: '-120px' })
 
-  const { data: expData, loading, error } = useExperiences(!inView)
-  const { data: projData } = useProjects(!inView)
-
-  // Держим анимацию минимум MIN_FLOW_MS после старта запроса.
+  // Держим анимацию минимум MIN_FLOW_MS после появления секции.
   const [minElapsed, setMinElapsed] = useState(false)
   useEffect(() => {
     if (!inView) return
@@ -36,7 +39,7 @@ export function TimelinePage() {
 
   const experiences = expData?.experiences ?? []
   const projects = projData?.projects ?? []
-  const fetching = inView && !error && (loading || !minElapsed)
+  const showFlow = inView && !error && (loading || !minElapsed)
 
   return (
     <Section id="timeline" className="bg-muted/20">
@@ -44,45 +47,62 @@ export function TimelinePage() {
 
       <div ref={anchorRef} />
 
-      {fetching && <FetchFlow label={t('loading')} />}
       {error && <p className="text-sm text-red-500">{t('error')}</p>}
 
-      {!fetching && experiences.length > 0 && <WorkTimeline items={experiences} />}
-
-      {!fetching && projects.length > 0 && (
-        <div className="mt-16">
-          <h3 className="mb-6 text-xl font-bold">{t('projectsTitle')}</h3>
-          <div className="grid gap-4 md:grid-cols-2">
-            {projects.map((project, index) => (
-              <Reveal key={project.id} delay={index * 0.08}>
-                <Card className="h-full">
-                  <CardContent className="pt-6">
-                    <div className="flex flex-wrap items-baseline justify-between gap-x-4">
-                      <h4 className="font-semibold">{project.company}</h4>
-                      <span className="text-xs text-muted-foreground">{project.period}</span>
-                    </div>
-                    <p className="mt-0.5 text-sm text-primary">{project.role}</p>
-                    <ul className="mt-3 flex list-disc flex-col gap-1.5 pl-4 text-sm text-muted-foreground">
-                      {project.bullets.map((bullet, bulletIndex) => (
-                        <li key={bulletIndex}>{bullet}</li>
-                      ))}
-                    </ul>
-                    {project.stack.length > 0 && (
-                      <div className="mt-3 flex flex-wrap gap-1.5">
-                        {project.stack.map((tech) => (
-                          <Badge key={tech} className="bg-card">
-                            {tech}
-                          </Badge>
-                        ))}
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-              </Reveal>
-            ))}
+      {/* Контент смонтирован всегда (резервирует высоту); анимация фетча —
+          оверлеем сверху, чтобы секция не «прыгала» после подгрузки. */}
+      <div className="relative">
+        {showFlow && (
+          <div className="absolute inset-x-0 top-0 z-10">
+            <FetchFlow label={t('loading')} />
           </div>
+        )}
+
+        <div
+          className={cn(
+            'transition-opacity duration-500',
+            showFlow && 'pointer-events-none opacity-0'
+          )}
+          aria-hidden={showFlow}
+        >
+          {experiences.length > 0 && <WorkTimeline items={experiences} />}
+
+          {projects.length > 0 && (
+            <div className="mt-16">
+              <h3 className="mb-6 text-xl font-bold">{t('projectsTitle')}</h3>
+              <div className="grid gap-4 md:grid-cols-2">
+                {projects.map((project, index) => (
+                  <Reveal key={project.id} delay={index * 0.08}>
+                    <Card className="h-full">
+                      <CardContent className="pt-6">
+                        <div className="flex flex-wrap items-baseline justify-between gap-x-4">
+                          <h4 className="font-semibold">{project.company}</h4>
+                          <span className="text-xs text-muted-foreground">{project.period}</span>
+                        </div>
+                        <p className="mt-0.5 text-sm text-primary">{project.role}</p>
+                        <ul className="mt-3 flex list-disc flex-col gap-1.5 pl-4 text-sm text-muted-foreground">
+                          {project.bullets.map((bullet, bulletIndex) => (
+                            <li key={bulletIndex}>{bullet}</li>
+                          ))}
+                        </ul>
+                        {project.stack.length > 0 && (
+                          <div className="mt-3 flex flex-wrap gap-1.5">
+                            {project.stack.map((tech) => (
+                              <Badge key={tech} className="bg-card">
+                                {tech}
+                              </Badge>
+                            ))}
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </Section>
   )
 }

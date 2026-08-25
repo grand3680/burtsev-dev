@@ -1,4 +1,5 @@
 {
+  "name": "Кирилл Бурцев",
   "nav": {
     "home": "Главная",
     "capabilities": "Что я могу",
@@ -13,6 +14,9 @@
   },
   "language": {
     "switch": "Сменить язык"
+  },
+  "menu": {
+    "toggle": "Меню"
   },
   "actions": {
     "scrollDown": "Листайте вниз"

@@ -71,7 +71,9 @@ body {
   margin: 0;
   min-height: 100vh;
   max-width: 100%;
-  overflow-x: hidden;
+  /* overflow-x НЕ задаём: иначе body становится вторым скролл-контейнером
+     (overflow-y → auto), и scrollIntoView/якоря скроллят «мёртвый» body, а не
+     вьюпорт. Горизонтальный клип уже сделан на <html>. */
   background-color: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-sans);

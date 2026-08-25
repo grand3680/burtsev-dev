@@ -68,7 +68,7 @@ export function ApiGraph() {
       {INTEGRATION_NODES.map((node) => (
         <span
           key={node.id}
-          className="node-pulse absolute -translate-x-1/2 -translate-y-1/2 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-semibold shadow-sm"
+          className="node-pulse absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border border-border bg-card px-2 py-1 text-[10px] font-semibold shadow-sm sm:px-3 sm:py-1.5 sm:text-xs"
           style={{
             left: `${String((node.x / VIEWBOX.width) * 100)}%`,
             top: `${String((node.y / VIEWBOX.height) * 100)}%`,
@@ -81,7 +81,7 @@ export function ApiGraph() {
 
       {/* Центральное ядро API */}
       <span
-        className="absolute -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-gradient-to-br from-accent to-primary px-6 py-3 text-2xl font-black tracking-wide text-primary-foreground shadow-2xl"
+        className="absolute -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-gradient-to-br from-accent to-primary px-4 py-2 text-lg font-black tracking-wide text-primary-foreground shadow-2xl sm:px-6 sm:py-3 sm:text-2xl"
         style={{
           left: `${String((CENTER.x / VIEWBOX.width) * 100)}%`,
           top: `${String((CENTER.y / VIEWBOX.height) * 100)}%`

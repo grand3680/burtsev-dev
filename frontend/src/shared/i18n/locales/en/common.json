@@ -1,4 +1,5 @@
 {
+  "name": "Kirill Burtsev",
   "nav": {
     "home": "Home",
     "capabilities": "What I do",
@@ -13,6 +14,9 @@
   },
   "language": {
     "switch": "Switch language"
+  },
+  "menu": {
+    "toggle": "Menu"
   },
   "actions": {
     "scrollDown": "Scroll down"
