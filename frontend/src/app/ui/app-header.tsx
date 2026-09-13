@@ -59,10 +59,12 @@ export function AppHeader() {
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <a href="#home" className="flex items-center gap-2 font-bold" aria-label={name}>
           <img
-            src="/kirill-burtsev.ico"
+            src="/kirill-avatar.webp"
             alt={name}
             width={28}
             height={28}
+            loading="eager"
+            decoding="async"
             className="h-7 w-7 rounded-md object-cover ring-1 ring-border"
           />
           <span className="hidden sm:inline">{name}</span>

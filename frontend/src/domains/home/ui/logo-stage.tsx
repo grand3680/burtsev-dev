@@ -1,8 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { Suspense, lazy, useCallback, useEffect, useRef, useState } from 'react'
 import { useReducedMotion } from 'framer-motion'
 import { ErrorBoundary } from '@shared/ui/error-boundary'
 import { PHOTO_CROP_Y, samplePhoto, type PhotoSample } from '../lib/sample-photo'
-import { PhotoParticlesCanvas } from './photo-particles'
+
+const PhotoParticlesCanvas = lazy(() =>
+  import('./photo-particles').then((m) => ({ default: m.PhotoParticlesCanvas }))
+)
 
 const PHOTO_SRC = '/kirill-burtsev.webp'
 const PARTICLE_COUNT = 22000
@@ -84,7 +87,9 @@ export function LogoStage() {
         {showCanvas && (
           <div className="absolute inset-[3px] rounded-[calc(2rem-3px)]">
             <ErrorBoundary fallback={<RevealOnMount onReveal={reveal} />}>
-              <PhotoParticlesCanvas sample={sample} onAssembled={handleAssembled} />
+              <Suspense fallback={null}>
+                <PhotoParticlesCanvas sample={sample} onAssembled={handleAssembled} />
+              </Suspense>
             </ErrorBoundary>
           </div>
         )}

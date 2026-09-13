@@ -7,6 +7,7 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 export default defineConfig({
   plugins: [react(), tailwindcss(), tsconfigPaths()],
   build: {
+    sourcemap: true,
     chunkSizeWarningLimit: 900,
     rollupOptions: {
       output: {
