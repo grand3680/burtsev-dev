@@ -42,7 +42,7 @@ export function TimelinePage() {
   const showFlow = inView && !error && (loading || !minElapsed)
 
   return (
-    <Section id="timeline" className="bg-muted/20">
+    <Section className="bg-muted/20">
       <SectionHeading eyebrow={t('eyebrow')} title={t('title')} description={t('description')} />
 
       <div ref={anchorRef} />

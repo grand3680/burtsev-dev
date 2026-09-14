@@ -8,7 +8,7 @@ export function ContactsPage() {
   const { t } = useTranslation('contacts')
 
   return (
-    <Section id="contacts">
+    <Section>
       <SectionHeading eyebrow={t('eyebrow')} title={t('title')} description={t('description')} />
 
       <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr]">

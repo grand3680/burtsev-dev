@@ -30,19 +30,29 @@ export function LogoStage() {
   const [revealed, setRevealed] = useState(false)
   const [done, setDone] = useState(false)
 
+  // Частицы (three.js, ~230 КБ gzip + WebGL) — только на десктопе с точным
+  // указателем. На мобильных это самый тяжёлый ресурс и главный источник TBT
+  // ради декоративного эффекта; там показываем сразу статичный портрет (он же LCP).
+  const [heavyFx] = useState(
+    () =>
+      typeof window !== 'undefined' &&
+      window.matchMedia('(min-width: 768px) and (pointer: fine)').matches
+  )
+  const enableFx = heavyFx && !reduced
+
   const reveal = useCallback(() => setRevealed(true), [])
 
   // Фото загрузилось → сэмплируем точки для частиц (из того же <img>, без второй загрузки).
   const handleImgLoad = useCallback(() => {
     const img = imgRef.current
-    if (reduced || !img) {
+    if (!enableFx || !img) {
       setRevealed(true)
       return
     }
     const next = samplePhoto(img, PARTICLE_COUNT)
     if (next) setSample(next)
     else setRevealed(true)
-  }, [reduced])
+  }, [enableFx])
 
   // Событие onLoad может не сработать, если фото уже в кэше к моменту навешивания хендлера.
   useEffect(() => {
@@ -56,7 +66,7 @@ export function LogoStage() {
     window.setTimeout(() => setDone(true), 900)
   }, [])
 
-  const showCanvas = !reduced && !done && sample !== null
+  const showCanvas = enableFx && !done && sample !== null
 
   return (
     <div className="relative aspect-square w-full max-w-md">

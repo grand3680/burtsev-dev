@@ -11,7 +11,7 @@ export function DataFetchingPage() {
   const { status, activeStep, data, error, run } = useDemoRunner()
 
   return (
-    <Section id="data-fetching">
+    <Section>
       <SectionHeading eyebrow={t('eyebrow')} title={t('title')} description={t('description')} />
 
       <div className="grid gap-5 lg:grid-cols-2">

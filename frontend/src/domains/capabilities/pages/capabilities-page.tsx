@@ -18,7 +18,7 @@ export function CapabilitiesPage() {
   const { t } = useTranslation('capabilities')
 
   return (
-    <Section id="capabilities" className="bg-muted/20">
+    <Section className="bg-muted/20">
       <SectionHeading
         eyebrow={t('eyebrow')}
         title={t('title')}

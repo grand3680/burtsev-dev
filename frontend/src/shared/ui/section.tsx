@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import { cn } from '@shared/lib/cn'
 
 interface SectionProps {
-  id: string
+  id?: string
   children: ReactNode
   className?: string
   containerClassName?: string

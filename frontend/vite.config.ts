@@ -13,7 +13,8 @@ export default defineConfig({
       output: {
         manualChunks: {
           three: ['three', '@react-three/fiber'],
-          motion: ['framer-motion', 'gsap'],
+          motion: ['framer-motion'],
+          gsap: ['gsap'],
           apollo: ['@apollo/client', 'graphql']
         }
       }
